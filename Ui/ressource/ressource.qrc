@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="icone">
+    <file>icone.ico</file>
+    <file>download_arrow_icon_143023.ico</file>
+  </qresource>
+</RCC>
