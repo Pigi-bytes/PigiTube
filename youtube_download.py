@@ -110,10 +110,10 @@ class Ui(QtWidgets.QMainWindow):
             # We create an instance of the class ProgressBar. It is for showing the user how much time is left
             self.video.register_on_progress_callback(self.progress_func)
             # We say that, for each chunk of data retrieved,when downloading,we call that function
+            self.lastprogress = 0
+            # last percentage of the download => see below, that acts like a reset
             if self.audio_only.isChecked():
                 # if the checkbox "audio only" is checked
-                self.lastprogress = 0
-                # last percentage of the download => see below, that acts like a reset
                 if self.titre_yt.isascii() == False:
                     self.titre_yt_ascii = "title_encoding_not_supported"
                 yt_str = self.video.streams.filter(only_audio=True).first()
