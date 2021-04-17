@@ -115,16 +115,18 @@ class Ui(QtWidgets.QMainWindow):
             if self.audio_only.isChecked():
                 # if the checkbox "audio only" is checked
                 if self.titre_yt.isascii() == False:
-                    self.titre_yt_ascii = "title_encoding_not_supported"
-                else:
-                    self.titre_yt_ascii = self.titre_yt
+                    # if the title is not ascii
+                    self.titre_yt = "title_encoding_not_supported"
+                    # we rename it 
                 yt_str = self.video.streams.filter(only_audio=True).first()
-                yt_str.download(self.folderpath, filename=self.titre_yt_ascii)
+                yt_str.download(self.folderpath, filename=self.titre_yt)
                 # We download the video by filtering all of the tracks, and we only keep the audio.
                 # That saves the file in a .mp4 format
                 self.error_in_thread_conversion =threading.Thread(target=self.Thread_for_conversion).start()
                 # we call a thread for converting the video into audio (convert .mp3 to .mp4), bc if the video is huge, 
                 # the process while take a while and halt the GUI
+                self.titre_yt = self.video.title
+                # we reset the title 
             else:
                 self.video = (
                     self.video.streams.filter(
