@@ -45,11 +45,11 @@ class Ui(QtWidgets.QMainWindow):
         # ----------------------------------------------------------------------
 
     def button_ok_press(self):
-        self.error_in_thread = False
+        self.error_in_thread_ok = False
         # If an error occurs in the thread we store it in this variable 
         threading.Thread(target=self.Thread_for_get_data).start()
         # We start the Thread 
-        if self.error_in_thread == True:
+        if self.error_in_thread_ok == True:
             # if the var is set to TRUE in the thread , that means we have an error
             # and that our url is not valid 
             QMessageBox.critical(
@@ -94,7 +94,7 @@ class Ui(QtWidgets.QMainWindow):
             self.download.setDisabled(False)
             # We activate the download Button
         except:
-            self.error_in_thread = True
+            self.error_in_thread_ok = True
             # if something went wrong with the url
 
     def download_button_press(self):
@@ -105,21 +105,24 @@ class Ui(QtWidgets.QMainWindow):
         self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self, "Select Folder")
         # We get the Path where the user wants to download his file
         if self.folderpath != '':
-            # We Check if the user hasn't closed the window for choosing his file 
+            # We Check if the user hasn't closed the window for choosing his file
             self.loadbar = ProgressBar(100, title=f"{self.titre_yt} download in progress ")
             # We create an instance of the class ProgressBar. It is for showing the user how much time is left
             self.video.register_on_progress_callback(self.progress_func)
             # We say that, for each chunk of data retrieved,when downloading,we call that function
-            self.lastprogress = 0
-            # last percentage of the download => see below, that acts like a reset
             if self.audio_only.isChecked():
                 # if the checkbox "audio only" is checked
-                self.video.streams.filter(only_audio=True).first().download(self.folderpath)
+                self.lastprogress = 0
+                # last percentage of the download => see below, that acts like a reset
+                if self.titre_yt.isascii() == False:
+                    self.titre_yt = "title_encoding_not_supported"
+                yt_str = self.video.streams.filter(only_audio=True).first()
+                yt_str.download(self.folderpath, filename=self.titre_yt)
                 # We download the video by filtering all of the tracks, and we only keep the audio.
                 # That saves the file in a .mp4 format
-                threading.Thread(target=self.Thread_for_conversion).start()
-                # we call a thread for converting the video into audio, bc if the video is huge, the process 
-                # while take a while and halt the GUI
+                self.error_in_thread_conversion =threading.Thread(target=self.Thread_for_conversion).start()
+                # we call a thread for converting the video into audio (convert .mp3 to .mp4), bc if the video is huge, 
+                # the process while take a while and halt the GUI
             else:
                 self.video = (
                     self.video.streams.filter(
@@ -155,26 +158,16 @@ class Ui(QtWidgets.QMainWindow):
         """
         It the Thread that is call for doing the conversion 
         """
-        ffplay_path = "./ffmpeg/ffmpeg.exe"
-        # we get the path of the executable for ffmpeg 
-        filePath = self.folderpath + '/' + self.titre_yt 
+        filePath = self.folderpath + '\\' + self.titre_yt
+
         # we get the path of the file
-        subprocess.call([self.resource_path(ffplay_path),
-                        '-i', filePath + '.mp4', filePath + '.mp3' ])
-                        # we call subprocess for doing a command that will convert
-                        # .mp4 audio file into .mp3 
+        ffmpeg = subprocess.call(["./ffmpeg/ffmpeg.exe", '-i', filePath + '.mp4', filePath + '.mp3' ])
+        # we call subprocess for doing a command that will convert
+        # .mp4 audio file into .mp3 
         os.remove(filePath + '.mp4')
         # we delete the .mp4 file created in the first place
         MessageBeep(-1)
         # does a bip 
-
-    def resource_path(self, relative_path):
-        """
-        Get the path for executable bin  
-        """
-        if hasattr(sys, '_MEIPASS'):
-            return os.path.join(sys._MEIPASS, relative_path)
-        return os.path.join(os.path.abspath("."), relative_path)    
 
 
 class ProgressBar(QProgressDialog):
