@@ -116,6 +116,8 @@ class Ui(QtWidgets.QMainWindow):
                 # if the checkbox "audio only" is checked
                 if self.titre_yt.isascii() == False:
                     self.titre_yt_ascii = "title_encoding_not_supported"
+                else:
+                    self.titre_yt_ascii = self.titre_yt
                 yt_str = self.video.streams.filter(only_audio=True).first()
                 yt_str.download(self.folderpath, filename=self.titre_yt_ascii)
                 # We download the video by filtering all of the tracks, and we only keep the audio.
