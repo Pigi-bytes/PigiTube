@@ -115,9 +115,9 @@ class Ui(QtWidgets.QMainWindow):
                 self.lastprogress = 0
                 # last percentage of the download => see below, that acts like a reset
                 if self.titre_yt.isascii() == False:
-                    self.titre_yt = "title_encoding_not_supported"
+                    self.titre_yt_ascii = "title_encoding_not_supported"
                 yt_str = self.video.streams.filter(only_audio=True).first()
-                yt_str.download(self.folderpath, filename=self.titre_yt)
+                yt_str.download(self.folderpath, filename=self.titre_yt_ascii)
                 # We download the video by filtering all of the tracks, and we only keep the audio.
                 # That saves the file in a .mp4 format
                 self.error_in_thread_conversion =threading.Thread(target=self.Thread_for_conversion).start()
