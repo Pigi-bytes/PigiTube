@@ -1,10 +1,11 @@
-import os
-import sys
+# -*- coding: utf-8 -*-
+import os, sys, shutil, subprocess
+import re
 import urllib
-import pytube
-import subprocess
 import threading
+from pathlib import Path
 from winsound import MessageBeep
+import pytube
 
 from PyQt5 import QtWidgets, uic
 from PyQt5.Qt import QProgressDialog
@@ -24,6 +25,8 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi("Ui/youtubeDownload.ui", self)
         # We load the .ui file into the class
+
+        self.reset_temp_file() 
 
         # we found the widgets and store them into var,
         # We also associate the button and their functions
@@ -114,31 +117,9 @@ class Ui(QtWidgets.QMainWindow):
             # last percentage of the download => see below, that acts like a reset
             if self.audio_only.isChecked():
                 # if the checkbox "audio only" is checked
-                if self.titre_yt.isascii() == False:
-                    # if the title is not ascii
-                    self.titre_yt = "title_encoding_not_supported"
-                    # we rename it 
-                yt_str = self.video.streams.filter(only_audio=True).first()
-                yt_str.download(self.folderpath, filename=self.titre_yt)
-                # We download the video by filtering all of the tracks, and we only keep the audio.
-                # That saves the file in a .mp4 format
-                self.error_in_thread_conversion =threading.Thread(target=self.Thread_for_conversion).start()
-                # we call a thread for converting the video into audio (convert .mp3 to .mp4), bc if the video is huge, 
-                # the process while take a while and halt the GUI
-                self.titre_yt = self.video.title
-                # we reset the title 
+                self.download_mp3()
             else:
-                self.video = (
-                    self.video.streams.filter(
-                    progressive=True, file_extension="mp4")
-                    .order_by("resolution")
-                    .desc().first()
-                    .download(self.folderpath))
-                # We save the video by filtering the best quality video with the .mp4 format and download it.
-                # that save the file in a .mp4 format
-
-                MessageBeep(-1)
-                # does a bip 
+               self.download_mp4()
 
     def progress_func(self, stream, chunk, bytes_remaining):
         """
@@ -162,16 +143,96 @@ class Ui(QtWidgets.QMainWindow):
         """
         It the Thread that is call for doing the conversion 
         """
-        filePath = self.folderpath + '\\' + self.titre_yt
-
+        filePathMp4 = Path(os.getcwd(), "Temp", "FFMPEG_compatible.mp4")
+        filePathMp3 = Path(os.getcwd(), "Temp", "FFMPEG_compatible.mp3")
         # we get the path of the file
-        ffmpeg = subprocess.call(["./ffmpeg/ffmpeg.exe", '-i', filePath + '.mp4', filePath + '.mp3' ])
-        # we call subprocess for doing a command that will convert
-        # .mp4 audio file into .mp3 
-        os.remove(filePath + '.mp4')
+
+        ffmpeg = subprocess.call(["./ffmpeg/ffmpeg.exe", '-i', str(filePathMp4), str(filePathMp3)])
+        # we call subprocess for doing a command that will convert .mp4 audio file into .mp3 
+        
+        os.remove(filePathMp4)
         # we delete the .mp4 file created in the first place
+        filePathMp3 = filePathMp3.rename(filePathMp3.with_name(str(self.titre_rename + ".mp3")))
+        # we rename the .mp3 file
+        shutil.move(filePathMp3, self.path_final.with_suffix('.mp3'))
+        # we move the file to the good directory
         MessageBeep(-1)
         # does a bip 
+
+    def download_mp3(self):
+        """
+        Function for downloading into .mp3
+        """
+        if (self.titre_yt.isascii() == False) or (any(c in '/\:*?"<>|' for c in titre_yt) == True):
+            # if there are symbols not ascii or not compatible with window's filesystem
+            self.titre_rename = re.sub(r'[^\x00-\x7F]+', '', self.titre_yt)
+            # we removes non ascii characters
+            for char in '/\:*?"<>|':
+                self.titre_rename = self.titre_rename.replace(char, '')
+                # we removes "illegal" characters from filenames
+        else:
+            self.titre_rename = self.titre_yt
+            
+        self.titre_enregistrement = 'FFMPEG_compatible'
+        # we rename the file so that ffmpeg can use it
+
+        where = Path(self.folderpath, self.titre_rename)
+        self.path_final = self.unique_filename(where, '.mp3')
+        self.titre_rename = self.path_final.name
+        # we see where the file will go at the end
+
+        yt_str = self.video.streams.filter(only_audio=True).first()
+        yt_str.download(Path(os.getcwd(), "Temp"), filename=self.titre_enregistrement)
+        # We download the video by filtering all of the tracks, and we only keep the audio.
+        # That saves the file in a .mp4 format into the Temp file
+        threading.Thread(target=self.Thread_for_conversion).start()
+        # we call a thread for converting the video into audio (convert .mp3 to .mp4), bc if the video is huge, 
+        # the process while take a while and halt the GUI . We move the file to the folder when finish 
+
+    def download_mp4(self):
+        """
+        Function for downloading in .mp4
+        """
+        if (self.titre_yt.isascii() == False) or (any(c in '/\:*?"<>|' for c in titre_yt) == True):
+            # if there are symbols not ascii or not compatible with window's filesystem
+            self.titre_rename = re.sub(r'[^\x00-\x7F]+', '', self.titre_yt)
+            # we removes non ascii characters
+            for char in '/\:*?"<>|':
+                self.titre_rename = self.titre_rename.replace(char, '')
+                # we removes "illegal" characters from filenames
+        else:
+            self.titre_rename = self.titre_yt
+        
+        where = Path(self.folderpath, self.titre_rename)
+        self.titre_rename = self.unique_filename(where, '.mp3').name
+
+        yt_str = self.video.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc()
+        yt_str.first().download(self.folderpath, filename=self.titre_rename)
+            # We save the video by filtering the best quality video with the .mp4 format and download it.
+            # that save the file in a .mp4 format
+
+        MessageBeep(-1)
+        # does a bip 
+
+    def unique_filename(self, output_filename, file_extension):
+        """
+        Return the name for the file, 
+        if the name already exist, we add (n) in frontself.
+        """
+        n = ''
+        while os.path.exists(f'{output_filename}{n}{file_extension}'):
+            if isinstance(n, str):
+                n = -1
+            n += 1
+        return Path(f'{output_filename}{n}')
+
+    def reset_temp_file(self):
+        """
+        Reset the temp file
+        """
+        shutil.rmtree(Path(os.getcwd(), "Temp"))
+        os.mkdir(Path(os.getcwd(), "Temp"))
+
 
 
 class ProgressBar(QProgressDialog):
