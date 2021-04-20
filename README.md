@@ -2,7 +2,6 @@
 
 An application to download YouTube videos, with a GUI, provided by PyQt5
 
-
 # How to use youtube downloader ?
 
 You must enter the url of your video in the field provided for this purpose this url must be submitted in the form as :
@@ -18,12 +17,17 @@ Then you have to click on the button 'ok' next to it. Wait a few seconds, the th
 
 If you only want audio, activate the small checkbox, it will only download the audio track : this will be in the form of an .mp3 file : 
 
-**WARNING If the title contains characters which are not supported, the file will be renamed ("title_encoding_not_supported.mp3") so that the conversion algorithm can work.**  
-Note that this only affects if you choose to just download the audio track.
+**WARNING If the title contains characters which are not supported, the file will be renamed, without the problematic character.**
 
-Then you have to choose the place where it should be downloaded.
+Then you have to choose the place where it should be downloaded, and wait...
 
-Normally it should have the name of your video, but if the character present in it does not support the video to audio conversion algorithm it will have the following name : "title_encoding_not_supported.mp3".
+
+
+The video will take much longer for the video :
+
+- For the .mp3, we download an .mp4 with only audio channels and we converted it to .mp3 with post processing software (FFMPEG)
+
+- We download the audio in .mp4, and the video in .mp4 and have them merge with post processing software (FFMPEG) together to have the best video quality
 
 # What are the video recording formats ?
 
