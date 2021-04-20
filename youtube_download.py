@@ -163,7 +163,7 @@ class Ui(QtWidgets.QMainWindow):
         """
         Function for downloading into .mp3
         """
-        if (self.titre_yt.isascii() == False) or (any(c in '/\:*?"<>|' for c in titre_yt) == True):
+        if (self.titre_yt.isascii() == False) or (any(c in '/\:*?"<>|' for c in self.titre_yt) == True):
             # if there are symbols not ascii or not compatible with window's filesystem
             self.titre_rename = re.sub(r'[^\x00-\x7F]+', '', self.titre_yt)
             # we removes non ascii characters
