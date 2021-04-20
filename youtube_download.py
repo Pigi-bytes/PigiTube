@@ -150,8 +150,7 @@ class Ui(QtWidgets.QMainWindow):
         """
         Function for downloading into .mp3
         """
-        self.loadbar = ProgressBar(
-            100, title=f"{self.titre_yt} download in progress ")
+        self.loadbar = ProgressBar(100, title=f"{self.titre_yt} download in progress ")
         # create a instance of the class for showing progress
         # function call when we retrive a chunk of dat
         self.video.register_on_progress_callback(self.progress_func_mp3)
@@ -165,8 +164,7 @@ class Ui(QtWidgets.QMainWindow):
         titre_rename = path_final.name
         # we get the final name for the file ; if on a folder they already have the file with the same name we had a number in front
 
-        yt_str = self.video.streams.filter(
-            only_audio=True, file_extension='mp4').first()
+        yt_str = self.video.streams.filter(only_audio=True, file_extension='mp4').first()
         yt_str.download(self.path_temp, filename=titre_enregistrement)
         # We download the video by filtering all of the tracks, and we only keep the audio.
         # That saves the file in a .mp4 format into the Temp file
@@ -176,14 +174,12 @@ class Ui(QtWidgets.QMainWindow):
         filePathMp3 = Path(self.path_temp, "FFMPEG_compatible.mp3")
 
         # command for converting .mp4 to .mp3
-        ffmpeg = subprocess.call(
-            ["./ffmpeg/ffmpeg.exe", '-i', filePathMp4, filePathMp3])
+        ffmpeg = subprocess.call(["./ffmpeg/ffmpeg.exe", '-i', filePathMp4, filePathMp3])
         self.loadbar.setValue(99)  # the download stop at 98%
 
         os.remove(filePathMp4)  # we delete the .mp4 file created
 
-        filePathMp3 = filePathMp3.rename(filePathMp3.with_name(
-            titre_rename + ".mp3"))  # we rename the .mp3 file
+        filePathMp3 = filePathMp3.rename(filePathMp3.with_name(titre_rename + ".mp3"))  # we rename the .mp3 file
         # we move the file to the good directory
         shutil.move(filePathMp3, self.folderpath)
 
@@ -195,41 +191,20 @@ class Ui(QtWidgets.QMainWindow):
         Function for downloading in .mp4
         """
 
-
-<< << << < HEAD
-        self.video.register_on_progress_callback(self.progress_func_mp4)
-        # We say that, for each chunk of data retrieved,when downloading,we call that function
-== == == =
-        if (self.titre_yt.isascii() == False) or (any(c in '/\:*?"<>|' for c in self.titre_yt) == True):
-            # if there are symbols not ascii or not compatible with window's filesystem
-            self.titre_rename = re.sub(r'[^\x00-\x7F]+', '', self.titre_yt)
-            # we removes non ascii characters
-            for char in '/\:*?"<>|':
-                self.titre_rename = self.titre_rename.replace(char, '')
-                # we removes "illegal" characters from filenames
-        else:
-            self.titre_rename = self.titre_yt
->>>>>> > main
-
         titre_rename = self.character_control(self.titre_yt)
 
         path_folder_and_file_name = Path(self.folderpath, titre_rename)
         path_final = self.unique_filename(path_folder_and_file_name, '.mp4')
         titre_rename = path_final.name
 
-        audio_stream = self.video.streams.filter(
-            adaptive=True, only_audio=True, file_extension='mp4').desc()
-        video_stream = self.video.streams.filter(
-            adaptive=True, res='1080p', file_extension='mp4').order_by('resolution').desc()
+        audio_stream = self.video.streams.filter(adaptive=True, only_audio=True, file_extension='mp4').desc()
+        video_stream = self.video.streams.filter(adaptive=True, res='1080p', file_extension='mp4').order_by('resolution').desc()
         if len(video_stream) == 0:  # if no 1080
-            video_stream = self.video.streams.filter(
-                adaptive=True, file_extension='mp4').order_by('resolution').desc()
+            video_stream = self.video.streams.filter( adaptive=True, file_extension='mp4').order_by('resolution').desc()
 
-        self.loadbar = ProgressBar(
-            100, title=f"{self.titre_yt} video download in progress ")
+        self.loadbar = ProgressBar(100, title=f"{self.titre_yt} video download in progress ")
         video_stream.first().download(self.path_temp, filename='video')
-        self.loadbar = ProgressBar(
-            100, title=f"{self.titre_yt} audio download in progress ")
+        self.loadbar = ProgressBar(100, title=f"{self.titre_yt} audio download in progress ")
         audio_stream.first().download(self.path_temp, filename='audio')
 
         # -----------------------merging--------------------------------------------
@@ -237,15 +212,13 @@ class Ui(QtWidgets.QMainWindow):
         filePathAudio = Path(self.path_temp, 'audio.mp4')
         filePathFinal = Path(self.path_temp, 'final.mp4')
 
-        subprocess.run(["./ffmpeg/ffmpeg.exe", '-i', filePathAudio,
-                       "-i", filePathVideo, '-c', 'copy', filePathFinal])
+        subprocess.run(["./ffmpeg/ffmpeg.exe", '-i', filePathAudio,"-i", filePathVideo, '-c', 'copy', filePathFinal])
 
         os.remove(filePathVideo)
         os.remove(filePathAudio)
         # we delete the .mp4 file created in the first place
 
-        filePathFinal = filePathFinal.rename(filePathFinal.with_name(
-            titre_rename + ".mp4"))  # we rename the .mp3 file
+        filePathFinal = filePathFinal.rename(filePathFinal.with_name(titre_rename + ".mp4"))  # we rename the .mp3 file
         # we move the file to the good directory
         shutil.move(filePathFinal, self.folderpath)
         MessageBeep(-1)
