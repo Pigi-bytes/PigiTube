@@ -190,6 +190,7 @@ class Ui(QtWidgets.QMainWindow):
         """
         Function for downloading in .mp4
         """
+        self.video.register_on_progress_callback(self.progress_func_mp4)
 
         titre_rename = self.character_control(self.titre_yt)
 
