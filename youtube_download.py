@@ -59,11 +59,12 @@ class Ui(QtWidgets.QMainWindow):
         if self.error_in_thread_ok == True:
             # if the var is set to TRUE in the thread , that means we have an error
             # and that our url is not valid
+            error = "An error occurred with your url, Make sure it is in the right format, \
+                    that it is not a video from a playlist, or have a time indicator in the url (if it ends with something like [&t=??s] )"
             QMessageBox.critical(
             self,
             "Error",
-            """An error occured, did you copy your url correctly?
-            Is it valid? Is it in the right format?""",)
+            error,)
             # we show the user the message of error
 
     def Thread_for_get_data(self):
@@ -73,6 +74,9 @@ class Ui(QtWidgets.QMainWindow):
         self.youtube_url = self.input.text()
         # we store the url in a more readable name
         try:
+            if len(self.youtube_url) != 43:
+                self.error_in_thread_ok = True
+                raise('Url pas de la bonne taille')
             # If an error occurs here, that means that the url is not valide
 
             self.video = pytube.YouTube(self.youtube_url)
