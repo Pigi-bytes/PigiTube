@@ -42,3 +42,37 @@ This app uses FFMPEG to convert .mp4 files to .mp3.
 # Dependency.
 
 this app is based on PyQt5 , FFMPEG and Pytube.
+
+
+# For installing 
+
+## With the standAlone
+
+just run the installation file in the folder "Standalone_Installler" and that all
+
+## With Python
+
+you need :
+- Python (3.6+) in the PATH
+- PIP (include in the installer of python)
+
+It's better to create a virtual environment, type in the console :
+- For creating the Venv :
+
+```.powershell
+py -m venv ./venv 
+```
+- to launch it (on window)
+```.powershell
+venv/scripts/activate
+```
+
+- Now our venv is operational, clone the repertory into the venv
+Run this command,   its going to install all the dependencies and this will do it locally, in the virtual environment
+```.powershell
+pip install -r requirements.txt
+```
+- for launching the app, do : 
+```.powershell
+py youtube_download.py 
+```
