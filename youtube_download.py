@@ -178,7 +178,7 @@ class Ui(QtWidgets.QMainWindow):
         filePathMp3 = Path(self.path_temp, "FFMPEG_compatible.mp3")
 
         # command for converting .mp4 to .mp3
-        ffmpeg = subprocess.call(["./ffmpeg/ffmpeg.exe", '-i', filePathMp4, filePathMp3])
+        ffmpeg = subprocess.call(["./FFmpeg/bin/ffmpeg.exe", '-i', filePathMp4, filePathMp3])
         self.loadbar.setValue(99)  # the download stop at 98%
 
         os.remove(filePathMp4)  # we delete the .mp4 file created
@@ -217,7 +217,7 @@ class Ui(QtWidgets.QMainWindow):
         filePathAudio = Path(self.path_temp, 'audio.mp4')
         filePathFinal = Path(self.path_temp, 'final.mp4')
 
-        subprocess.run(["./ffmpeg/ffmpeg.exe", '-i', filePathAudio,"-i", filePathVideo, '-c', 'copy', filePathFinal])
+        subprocess.run(["./FFmpeg/bin/ffmpeg.exe", '-i', filePathAudio,"-i", filePathVideo, '-c', 'copy', filePathFinal])
 
         os.remove(filePathVideo)
         os.remove(filePathAudio)
