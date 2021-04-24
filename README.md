@@ -1,48 +1,48 @@
 # PigiTube :
 
 ## Dependance
-This app use [PyQt5](#PyQt5) for the GUI(Grapiqual User Interface), [Pytube](#Pytube) for downloading stream from youtube, and [FFmpeg](#FFMPEG), for all the conversion and that kind of stuff.  
-I only own the code from PigiTube.py, as my [Liscense](license) say.
+This app uses [PyQt5](#PyQt5) for the GUI (Grapiqual User Interface), [Pytube](#Pytube) for downloading streams from youtube, and [FFmpeg](#FFMPEG), for all the conversion and that kind of stuff.  
+I only own the code from PigiTube.py, as my [License](license) says.
 
 ## What is this ?
-This is an application to download YouTube videos, with a simple GUI for personnal usage ONLY.
+This is an application to download YouTube videos, with a simple GUI for personnal use ONLY.
 I am not responsible for your actions.
 
 ## Table of Contents of PigiTube
 1.  [How to install PigiTube ?](#Install)
 2.  [How to use PigiTube](#Usage)
-3.  [How do PigiTube Download video ?](#Download)
-4.  [What are the format / CODEC ?](#CODECS_&_Formats)
-5.  [Dash Vs Progressive download](#DASH)
+3.  [How does PigiTube Download video ?](#Download)
+4.  [What are the formats / CODECS ?](#CODECS_&_Formats)
+5.  [DASH Vs Progressive download](#DASH)
 6.  [Post Processing software](#FFMPEG)
 7.  [Graphical user interface](#PyQt5)
-8.  [Api for youtube video](#Pytube)
+8.  [API for youtube video](#Pytube)
 9.  [Liscense and legal notice](#License)
-10. [Source and link useful for that project](#source)
-11. [Contributeur](#Contributeur)
+10. [Source and useful links for that project](#source)
+11. [Contributors](#Contributeur)
 
 # **Install**
 
 ## With the standAlone (only window confirmed)
-Only work for window, or maybe MAC/linux with WINE but idk..
-If you live at the time of the dinosaurs and you still have a pc on window 7, choose the executable addequate, same for the users of window 10, It on the StandAlone_Installer folder ( not yet D: ).
+Only works with window, or maybe MAC/linux with WINE but Idk..
+If you live at the time of the dinosaurs and you still have a pc on windows 7, choose the addequate executable, same for the users of windows 10, It on the StandAlone_Installer folder ( not yet D: ).
 
 ## With Python (all platform)
 
-For that you will need Python 3.8+ and Pip in the PATH.  
+You will need Python 3.8+ and Pip in the PATH.  
 First we are going to get the repertory on github and with the following command : Open the command prompt into your folder and type :
 ```
 git clone https://github.com/Pigi-bytes/Youtube_download.git
 cd  Youtube_download
 ```
-Now, we have download the app, and we are inside...  
+Now, we have downloaded the app, and we are inside...  
  This is the right time to create a venv
-known as Virtual Environment Its will allow you to keep your python file clean and have specific version for your pip paquetages.  
+known as Virtual Environment. It will allow you to keep your python file clean and have specific versions for your pip paquetages.  
 We create a Venv with the following command :
 ```
 py -m venv ./venv 
 ```
-All this is good but he must be activated, so we run this command :
+All this is good but it must be activated, so we run this command :
 ```
 venv/scripts/activate
 ```
@@ -50,7 +50,7 @@ We can download the different modules that we will need in the venv:
 ```
 pip install -r requirements.txt
 ```
-And for launching the app you will need to type this ( when your into the venv)
+And for launching the app you will need to type this ( when you are into the venv)
 ```
 py youtube_download.py 
 ```
@@ -71,7 +71,7 @@ venv/scripts/activate
 py youtube_download.py 
 ```
 
-# Usage
+# Use
 
 You must enter the url of your video in the field provided for this purpose, this url must be submitted in the form as :
 
@@ -81,7 +81,7 @@ You must enter the url of your video in the field provided for this purpose, th
 > All other urls from youtube are not supported :  
 > (mobile URL, URL with time, a video into a playlist)
 
-Then you have to click on the button 'ok' next to it. Wait a few seconds, the thumbnail and the title should be displayed to confirm that the desired video is indeed the correct one.
+Then you have to click on the button 'ok' next to it. Wait for a  few seconds, the thumbnail and the title should be displayed to confirm that the desired video is indeed the correct one.
 
 If you only want audio, activate the small checkbox, it will only download the audio track : this will be in the form of an .mp3 file : otherwise it will be the video (by default) and a .mp4 file.
 
@@ -106,30 +106,30 @@ Then our post-processing conversion software [FFMPEG](#FFMPEG) will take care of
 > Temp\FFMPEG_compatible.mp4  
 > Temp\FFMPEG_compatible.mp3
 
-We delete the file which ends with .mp4, and we rename the one that ends with .mp3, with the right file name (without special characters and with a suffix if necessary), our temp folder now look like this:
+We delete the file which ends with .mp4, and we rename the one that ends with .mp3, with the right file name (without special characters and with a suffix if necessary), our temp folder now looks like this:
 > Temp\YourAudioWithoutSpecialChracterSuffixe.mp3  
 
 And finally we copy it to the place you choose.
 
 ## For video :
 ---
-The application will download the best audio quality of your video, in the .mp4 format ( Which just contains the codecs / channels for the audio, and no video, juste a black background ).
+The application will download the best audio quality of your video, in the .mp4 format ( Which just contains the codecs / channels for the audio, and no video, just a black background ).
 
 It will save it under a different name from the final one, to ensure compatibility with our conversion software, into a temporary folder.  
 > Temp\audio.mp4
 
-After the application will download to see what video quality is obtainable :  
+After the application will check to see what video quality is obtainable :  
 By default it will stop at 1080p, to save bandwidth, but you can change it in the code.  
 If it does not find the 1080p quality it will take the highest available (below 1080p).  
-Its, its gonna take some time, (again it depends on the size of the video and your internet connection (downward flow))  
-Its going to be saved, in the temporary folder, under the name 'video.mp4', because yes it is an mp4 file, but without the audio channels, because youtube uses a processor call [DASH](#DASH) (see below).
+Its gonna take some time, (again it depends on the size of the video and your internet connection (downward flow))  
+Its going to be saved, in the temporary folder, under the name 'video.mp4', because yes it is an mp4 file, but without the audio channels, because youtube uses a processor called [DASH](#DASH) (see below).
 
 So now we end up with 2 files in the temporary folder:
 > Temp\audio.mp4  
 > Temp\video.mp4
 
-The post processing software, [FFMPEG](#FFMPEG),  will then copy the audio track ON the video and render it, and TADAM we have our FullHD 1080x1920 60fps video, here name is 'final.mp4'.
-The temporay folder look like this :
+The post processing software, [FFMPEG](#FFMPEG),  will then copy the audio track ON the video and render it, and TADAM we have our FullHD 1080x1920 60fps video, its name is 'final.mp4'.
+The temporay folder will look like this :
 > Temp\audio.mp4  
 > Temp\video.mp4  
 > Temp\final.mp4
@@ -137,7 +137,7 @@ The temporay folder look like this :
 So we delete audio.mp4, video.mp4 and rename final.mp4 with the right file name (without special characters and with a suffix if necessary) and now we have :
 > Temp\YourVideoWithoutSpecialChracterSuffixe.mp4 
 
-We copy that were you want it to be, and it done.
+We copy that where you want i t to be, and it is done. X
 
 # CODECS_&_Formats
 
