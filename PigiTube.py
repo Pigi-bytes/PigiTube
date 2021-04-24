@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
 import sys
@@ -26,7 +27,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi("Ui/youtubeDownload.ui", self)
+        uic.loadUi("Ui/PigiTube.ui", self)
         # We load the .ui file into the class
 
         self.path_temp = Path(os.getcwd(), "Temp")
