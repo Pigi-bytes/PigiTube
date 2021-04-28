@@ -29,7 +29,7 @@ I am not responsible for your actions.
 ## With the standAlone (only window confirmed)
 
 Only works with window, or maybe MAC/linux with WINE but Idk..
-If you live at the time of the dinosaurs and you still have a pc on windows 7, choose the addequate executable, same for the users of windows 10, It on the StandAlone_Installer folder ( not yet D: ).
+I build it with python 3.8 so is compatible with windows7 and windows10. It on the 'installer_exe" folder.
 
 ## With Python (all platform)
 
