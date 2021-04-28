@@ -216,7 +216,7 @@ This is because YouTube supports a streaming technique called [DASH](https://en.
 It coexists with another technique, which is called [progressive download](https://en.wikipedia.org/wiki/Progressive_download).  
 While [DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) specializes in high quality streams, [progressive download](https://en.wikipedia.org/wiki/Progressive_download) deals with lower quality streams, like 720p or below, this last technique contains both audio and video stream.  
 For [DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP), the quality is not limited, but we need to download each stream, audio and video, before merging them with post processing software (in our case, [FFMPEG](#FFMPEG)  
-![DASH vs Progressive download](https://qph.fs.quoracdn.net/main-qimg-6af96fa067d9ae06d02834af4c9bf3bd)
+[DASH vs Progressive download image](https://qph.fs.quoracdn.net/main-qimg-6af96fa067d9ae06d02834af4c9bf3bd)
 
 # FFMPEG
 
