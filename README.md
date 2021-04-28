@@ -261,10 +261,6 @@ My project is under the [Gpl v3 license](https://www.gnu.org/licenses/gpl-3.0.en
 I am not a lawyer, i just know how to use google (yes I am a programmer lmao).  
 I'm not an expert, if you have any questions or anything else (eg I don't respect your license) let me know. (I have had a hard time with FFMPEG D: )
 
-# source
-
-No yet
-
 # Contributeur
 
-@nanimo_hakai(IG) for the name of the app
+[May](https://www.instagram.com/nanimo_hakai/) for the name of the app.
