@@ -8,7 +8,10 @@ import re
 import urllib
 import threading
 from pathlib import Path
-from winsound import MessageBeep
+try:
+    from winsound import MessageBeep
+except:
+    ENV = 'LINUX/OSX'
 import pytube
 
 from PyQt5 import QtWidgets, uic
@@ -189,7 +192,8 @@ class Ui(QtWidgets.QMainWindow):
         shutil.move(filePathMp3, self.folderpath)
 
         self.loadbar.setValue(100)  # we show that the process had finish
-        MessageBeep(-1)
+        if ENV != 'LINUX/OSX':
+            MessageBeep(-1)
 
     def download_mp4(self):
         """
@@ -227,7 +231,8 @@ class Ui(QtWidgets.QMainWindow):
         filePathFinal = filePathFinal.rename(filePathFinal.with_name(titre_rename + ".mp4"))  # we rename the .mp3 file
         # we move the file to the good directory
         shutil.move(filePathFinal, self.folderpath)
-        MessageBeep(-1)
+        if ENV != 'LINUX/OSX':
+            MessageBeep(-1)
         # does a bip
 
     def unique_filename(self, output_filename, file_extension):
