@@ -33,7 +33,7 @@ I build it with python 3.8 so is compatible with windows7 and windows10. It on t
 
 ## With Python (all platform)
 
-You will need Python 3.8+ and Pip in the PATH.  
+You will need Python 3.9+ and Pip in the PATH.  
 First we are going to get the repertory on github and with the following command : Open the command prompt into your folder and type :
 
 ```
@@ -42,7 +42,7 @@ cd  Youtube_download
 ```
 
 Now, we have downloaded the app, and we are inside...  
- This is the right time to create a venv
+This is the right time to create a venv
 known as Virtual Environment. It will allow you to keep your python file clean and have specific versions for your pip paquetages.  
 We create a Venv with the following command :
 
