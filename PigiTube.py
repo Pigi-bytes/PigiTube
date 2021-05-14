@@ -61,14 +61,10 @@ class Ui(QtWidgets.QMainWindow):
         threading.Thread(target=self.Thread_for_get_data).start()
         # We start the Thread
         if self.error_in_thread_ok == True:
-            # if the var is set to TRUE in the thread , that means we have an error
-            # and that our url is not valid
+            #our url is not valid
             error = "An error occurred with your url, Make sure it is in the right format, \
                     that it is not a video from a playlist, or have a time indicator in the url (if it ends with something like [&t=??s] )"
-            QMessageBox.critical(
-            self,
-            "Error",
-            error,)
+            QMessageBox.critical(self, "Error", error,)
             # we show the user the message of error
 
     def Thread_for_get_data(self):
@@ -76,19 +72,17 @@ class Ui(QtWidgets.QMainWindow):
         Here, we watch if a url is valid, and if it is, we update the GUI, title and thumbnail
         """
         self.youtube_url = self.input.text()
-        # we store the url in a more readable name
         try:
+            # If an error occurs here, that means that the url is not valide
             if len(self.youtube_url) != 43:
                 self.error_in_thread_ok = True
                 raise('Url pas de la bonne taille')
-            # If an error occurs here, that means that the url is not valide
 
             self.video = pytube.YouTube(self.youtube_url)
             # We create the video objet, which contains the video we want
             # we use that object for all of the downloading process
 
             self.titre_yt = self.video.title
-            # We get the title of the video
 
             ID = self.youtube_url[-11:]
             thumbnail_link = f"http://img.youtube.com/vi/{ID}/hqdefault.jpg"
@@ -108,6 +102,7 @@ class Ui(QtWidgets.QMainWindow):
             self.titre.setText(self.titre_yt)
             self.download.setDisabled(False)
             # We activate the download Button
+
         except:
             self.error_in_thread_ok = True
             # if something went wrong with the url
@@ -117,8 +112,7 @@ class Ui(QtWidgets.QMainWindow):
         Function that is called when the download button is clicked,
         it is deactivated if the url is not valid
         """
-        self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "Select Folder")
+        self.folderpath = QtWidgets.QFileDialog.getExistingDirectory(self, "Select Folder")
         # We get the Path where the user wants to download his file
         if self.folderpath != '':
             # We Check if the user hasn't closed the window for choosing his file
@@ -238,7 +232,6 @@ class Ui(QtWidgets.QMainWindow):
         except:
             pass
        
-
     def unique_filename(self, output_filename, file_extension):
         """
         Return the name for the file, 
@@ -255,7 +248,8 @@ class Ui(QtWidgets.QMainWindow):
         """
         Reset the temp file
         """
-        shutil.rmtree(self.path_temp)
+        try:
+            shutil.rmtree(self.path_temp)
         os.mkdir(self.path_temp)
 
     def character_control(self, world):
