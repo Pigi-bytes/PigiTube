@@ -4,7 +4,6 @@
 31/05/2021 : Pytube issue 
 
 ## Dependance
-
 This app uses [PyQt5](#PyQt5) for the GUI (Grapiqual User Interface), [Pytube](#Pytube) for downloading streams from youtube, and [FFmpeg](#FFMPEG), for all the conversion and that kind of stuff.  
 I only own the code from PigiTube.py, as my [License](license) says.
 
@@ -235,6 +234,11 @@ See [License](#License) for more information about them.
 
 It is a module which allows you to handle the high level API [Qt](https://en.wikipedia.org/wiki/Qt_(software)), written in C++ with python, thanks to this, we can make rather pretty graphical interfaces compared to Tkinter.  
 See [License](#License) for more information about them.
+
+The GUI of PigiTube look like this : 
+
+![Screenshot](https://github.com/Pigi-bytes/PigiTube/blob/main/pic%20readme/screen1.png) 
+
 
 # Pytube
 
