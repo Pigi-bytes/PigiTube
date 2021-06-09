@@ -1,7 +1,3 @@
-# PigiTube :
-
-## issue 
-31/05/2021 : Pytube issue 
 
 ## Dependance
 This app uses [PyQt5](#PyQt5) for the GUI (Grapiqual User Interface), [Pytube](#Pytube) for downloading streams from youtube, and [FFmpeg](#FFMPEG), for all the conversion and that kind of stuff.  
@@ -237,7 +233,8 @@ See [License](#License) for more information about them.
 
 The GUI of PigiTube look like this : 
 
-![Screenshot](https://github.com/Pigi-bytes/PigiTube/blob/main/pic%20readme/screen1.png) 
+![Screenshot](https://github.com/Pigi-bytes/PigiTube/blob/main/pic%20readme/PigiTube_off.png) 
+![Screenshot](https://github.com/Pigi-bytes/PigiTube/blob/main/pic%20readme/PigiTube_on.png) 
 
 
 # Pytube
