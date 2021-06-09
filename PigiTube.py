@@ -102,8 +102,8 @@ class Ui(QtWidgets.QMainWindow):
             self.titre.setText(self.titre_yt)
             self.download.setDisabled(False)
             # We activate the download Button
-
-        except:
+            
+        except: 
             self.error_in_thread_ok = True
             # if something went wrong with the url
 
@@ -250,6 +250,8 @@ class Ui(QtWidgets.QMainWindow):
         """
         try:
             shutil.rmtree(self.path_temp)
+        except:
+            pass
         os.mkdir(self.path_temp)
 
     def character_control(self, world):
