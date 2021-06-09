@@ -39,8 +39,8 @@ You will need Python 3.9+ and Pip in the PATH.
 First we are going to get the repertory on github and with the following command : Open the command prompt into your folder and type :
 
 ```
-git clone https://github.com/Pigi-bytes/Youtube_download.git
-cd  Youtube_download
+git clone https://github.com/Pigi-bytes/PigiTube.git
+cd  PigiTube
 ```
 
 Now, we have downloaded the app, and we are inside...  
@@ -67,7 +67,7 @@ pip install -r requirements.txt
 And for launching the app you will need to type this ( when you are into the venv)
 
 ```
-py youtube_download.py 
+py PigiTube.py 
 ```
 
 ## To sum up :
@@ -86,7 +86,7 @@ From now on you just have to execute these two commands to make it work (on the 
 
 ```
 venv/scripts/activate
-py youtube_download.py 
+py PigiTube.py 
 ```
 
 # Use
@@ -200,7 +200,7 @@ The codecs for the audio are [AAC mpga](https://en.wikipedia.org/wiki/Advanced_A
     
     - Use [VLC](https://www.videolan.org/vlc/)
     - There are probably other options, but I don't have the money for a mac 
-      and especially never will I use this horrible OS.
+      and especially never use it.
     - I have too little experience with penguin OS to talk about it, I'm sure if I say something wrong about it, they'll find me and beat me up with metal pipes.
 
 - flux 1 (audio)
@@ -270,4 +270,4 @@ I'm not an expert, if you have any questions or anything else (eg I don't respec
 
 # Contributeur
 
-[May](https://www.instagram.com/nanimo_hakai/) for the name of the app.
+Thank may for the name
