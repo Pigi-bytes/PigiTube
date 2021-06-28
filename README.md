@@ -24,11 +24,6 @@ I am not responsible for your actions.
 
 # **Install**
 
-## With the standAlone (only window10 confirmed)
-
-Only works with window, or maybe MAC/linux with WINE but Idk..
-I build it with python 3.8 so is compatible with windows7 and windows10. It on the 'installer_exe" folder.
-
 ## With Python (all platform)
 
 You will need Python 3.9+ and Pip in the PATH.  
