@@ -103,8 +103,10 @@ class Ui(QtWidgets.QMainWindow):
             self.download.setDisabled(False)
             # We activate the download Button
             
-        except: 
+        except Exception as e: 
             self.error_in_thread_ok = True
+            print("Error :") # for debug 
+            print(e)
             # if something went wrong with the url
 
     def download_button_press(self):
