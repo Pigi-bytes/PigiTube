@@ -216,8 +216,8 @@ class Ui(QtWidgets.QMainWindow):
         audio_stream.first().download(self.path_temp, filename='audio')
 
         # -----------------------merging--------------------------------------------
-        filePathVideo = Path(self.path_temp, 'video.mp4')
-        filePathAudio = Path(self.path_temp, 'audio.mp4')
+        filePathVideo = Path(self.path_temp, 'video')
+        filePathAudio = Path(self.path_temp, 'audio')
         filePathFinal = Path(self.path_temp, 'final.mp4')
 
         subprocess.run(["./FFmpeg/bin/ffmpeg.exe", '-i', filePathAudio,"-i", filePathVideo, '-c', 'copy', filePathFinal])
